@@ -47,11 +47,11 @@ async function handleSaveClick(input, saveButton, cancelButton) { //добавл
         var response = fetch("/Index?handler=Add&title=" + taskTitle)
         .then(Response => {
             if (Response.ok) {
-               addTaskToList(taskTitle);
-                    input.remove();
-                    saveButton.remove();
-                    cancelButton.remove();
-                    addTaskBtn.style.display = "block"; 
+                addTaskToList(taskTitle);
+                input.remove();
+                saveButton.remove();
+                cancelButton.remove();
+                addTaskBtn.style.display = "block"; 
             }
         });
 
@@ -68,9 +68,19 @@ function addTaskToList(title, taskId) {
             <button type="button" class="btn btn-outline-success btn-sm">
                 <img src="/done.svg"/>
             </button>
-            //<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteTask(${taskId}, this)">
-            //    <img src="/delete.svg"/>
-            //</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteTask(${taskId}, this)">
+                <img src="/delete.svg"/>
+            </button>
         </div>`;
     list.appendChild(newItem);
+}
+
+function deleteTask(taskId, button) {
+    var response = fetch("/Index?handler=Delete&id=" + taskId)
+        .then(Response => {
+            if (Response.ok) {
+                let listItem = button.closest("li");
+                listItem.remove();
+            }
+        });
 }

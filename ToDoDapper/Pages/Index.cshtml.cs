@@ -43,7 +43,7 @@ namespace ToDoDapper.Pages
             string sql = "update todos set is_completed = @IsCompleted where id = @Id";
             connection.Execute(sql, new { Id = id, IsCompleted = isCompleted });
         }
-        public void OnPostDelete(int id) // удалить задачу 
+        public void OnGetDelete(int id) // удалить задачу 
         {
             using var connection = CreateConnection();
             string sql = "delete from todos where id = @Id";

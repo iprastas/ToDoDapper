@@ -4,29 +4,30 @@
     ViewData["Title"] = "Home page";
 }
 
+<h4>Текущие задачи</h4>
 
-    <h4>Текущие задачи</h4>
+<ul class="list-group list-group-numbered mb-3" id="TaskList">
+    @foreach (var plan in Model.TodoList)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <label>@plan.Title</label>
+                <button type="button" class="btn btn-outline-success btn-sm" id="completeTask">
+                    <img src="~/done.svg" />
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="deleteTask" onclick="deleteTask(@plan.Id, this)">
+                    <img src="/delete.svg" />
+                </button>
+            </div>
+        </li>
+    }
+</ul>
 
-    <ul class="list-group list-group-numbered mb-3" id="TaskList">
-        @foreach(var plan in Model.TodoList){
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <label>@plan.Title</label>
-                    <button type="button" class="btn btn-outline-success btn-sm" id="completeTask">
-                        <img src="~/done.svg"/>
-                    </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm" id="deleteTask">
-                        <img src="/delete.svg"/>
-                    </button>
-                </div>
-            </li>
-        }
-    </ul>
+<div id="newTaskContainer" class="col-6 mb-3 d-flex align-items-center"></div>
+<div class="mb-3">
+    <button type="button" class="btn btn-success" id="addTaskBtn">Добавить задачу</button>
+</div>
 
-    <div id="newTaskContainer" class="col-6 mb-3 d-flex align-items-center"></div>
-    <div class="mb-3">
-        <button type="button" class="btn btn-success" id="addTaskBtn">Добавить задачу</button>
-    </div>
 <section>
     <script src="~/js/site.js" type="text/javascript" asp-append-version="true"></script>
 </section>
