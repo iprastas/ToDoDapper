@@ -11,8 +11,8 @@
     {
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <label>@plan.Title</label>
-                <button type="button" class="btn btn-outline-success btn-sm" id="completeTask">
+                <label id="tasklabel">@plan.Title</label>
+                <button type="button" class="btn btn-outline-success btn-sm" id="completeTask" onclick="completeTask(@plan.Id, @plan.is_completed.ToString().ToLower(), this)">
                     <img src="~/done.svg" />
                 </button>
                 <button type="button" class="btn btn-outline-danger btn-sm" id="deleteTask" onclick="deleteTask(@plan.Id, this)">

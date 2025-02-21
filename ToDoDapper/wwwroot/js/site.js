@@ -57,6 +57,7 @@ async function handleSaveClick(input, saveButton, cancelButton) { //добавл
 
     }
 }
+
 function addTaskToList(title, taskId) {
     let list = document.getElementById("TaskList"); 
 
@@ -65,8 +66,8 @@ function addTaskToList(title, taskId) {
     newItem.innerHTML = `
         <div class="ms-2 me-auto">
             <label>${title}</label>
-            <button type="button" class="btn btn-outline-success btn-sm">
-                <img src="/done.svg"/>
+            <button type="button" class="btn btn-outline-success btn-sm" onclick="completeTask(${taskId}, ${false}, this)">
+                <img src="~/done.svg"/>
             </button>
             <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteTask(${taskId}, this)">
                 <img src="/delete.svg"/>
@@ -76,11 +77,41 @@ function addTaskToList(title, taskId) {
 }
 
 function deleteTask(taskId, button) {
-    var response = fetch("/Index?handler=Delete&id=" + taskId)
+    fetch("/Index?handler=Delete&id=" + taskId)
         .then(Response => {
             if (Response.ok) {
-                let listItem = button.closest("li");
-                listItem.remove();
+                let deleteItem = button.closest("li");
+                deleteItem.remove();
             }
+        });
+}
+
+function completeTask(taskId, is_completed, button) {
+    fetch("/Index?handler=Update&id=" + taskId + "&isCompleted=" + is_completed)
+        .then(Response => {
+            if (Response.ok) {
+                let updateItem = button.closest("li");
+                updateItem.style.backgroundColor = "#d4edda";
+
+                let cancelTaskButton = document.createElement("button");
+                cancelTaskButton.type = "button";
+                cancelTaskButton.className = "btn btn-outline-warning btn-sm ms-2";
+                cancelTaskButton.innerHTML = `<img src="/cancel.svg"/>`;
+                cancelTaskButton.addEventListener("click", function () {
+                    cancelTask(taskId, IsCompleted, cancelButton);
+                }); 
+
+                // Заменяем кнопку completeTask на cancelTask
+                button.replaceWith(cancelTaskButton);
+            }
+        });
+}
+
+function cancelTask(taskId, isCompleted, button) {
+    fetch("/Index?handler=Update&id=" + taskId + "&isCompleted=" + isCompleted)
+        .then(Response => {
+            let listItem = button.closest("li");
+            listItem.style.backgroundColor = "";
+            cancelbutton.replaceWith(Button);
         });
 }
